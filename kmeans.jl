@@ -1,15 +1,15 @@
 function clusteriza(A,B)
-    lA, cA = size(A)
-    lB, cB = size(B)
-    C = zeros(lB, cA)
+    mA, nA = size(A)
+    mB, nB = size(B)
+    C = zeros(nB, nA)
     
-    for i=1:cA #Iteramos por todas as colunas de A associando cada uma delas a um cluster    
-        vC = zeros(cB)
+    for i=1:nA #Iteramos por todas as colunas de A associando cada uma delas a um cluster    
+        vC = zeros(nB)
         cluster = 1
         
         #Iteramos por todos os vetores em B procurando pelo que está mais próximo de A e associamos a coluna corrente
         #de A ao cluster de tal vetor.
-        for j=2:cB 
+        for j=2:nB 
             if(norm(A[:, i] - B[:, j]) < norm(A[:, i] - B[:, cluster]))
                 cluster = j
             end
