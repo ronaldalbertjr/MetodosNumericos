@@ -82,5 +82,36 @@ function my_qr(A)
     return Q, R
 end
 
+function clusteriza(A,B)
+    lA, cA = size(A)
+    lB, cB = size(B)
+    C = zeros(lB, cA)
+    for i=1:cA
+        vC = zeros(cB)
+        cluster = 1
+        for j=2:cB
+            if(norm(A[:, i] - B[:, j]) < norm(A[:, i] - B[:, cluster]))
+                cluster = j
+            end
+        end
+        vC[cluster] = 1
+        C[:, i] = vC
+    end
+    
+    return C
+end
 
+function kmeans(A, k)
+    m,n = size(A)
+    B = randn(m, k)
+    C = clusteriza(A, B)
+    norma_anterior = 99999999999999999999
+    while(norm(A - B*C) < norma_anterior)
+        B = melhor_base(A, C)
+        C = clusteriza(A, B)
+        norma_anterior = norm(A - B*C)
+    end
+    
+    return B, C
+end
 
